@@ -15,6 +15,7 @@ def open_file():
         return
 
     with open(filepath, newline="") as file:
+        window.title(f"Sausage Solver - {filepath}")
         reader = csv.reader(file)
 
         r = 0
