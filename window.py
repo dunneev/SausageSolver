@@ -29,7 +29,11 @@ def open_file():
                     relief=tk.RAISED,
                     borderwidth=1
                 )
-                frame.grid(row=r, column=c, sticky="nesw")
+
+                # Set propagate to false to prevent frames from wrapping content
+                frame.propagate(0)
+                frame.grid(row=r, column=c, sticky="nsew")
+
                 label = tk.Label(master=frame, text=col)
                 label.pack()
 
