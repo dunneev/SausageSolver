@@ -14,35 +14,8 @@ def open_file():
     if not filepath:
         return
 
-    # txt_edit.delete("1.0", tk.END)
-
-    # with open(filepath, "r") as input_file:
-    #     text = input_file.read()
-    #     txt_edit.insert(tk.END, text)
-    # window.title(f"Sausage Solver - {filepath}")
-
     with open(filepath, newline="") as file:
         reader = csv.reader(file)
-
-        # r = 0
-        # for row in reader: 
-        #     window.columnconfigure(r, weight=1)
-        #     window.rowconfigure(r, weight=1)
-
-        #     c = 0
-        #     for col in row:
-        #         frame = tk.Frame(
-        #         master=fr_map,
-        #         relief=tk.RAISED,
-        #         borderwidth=1,
-        #         sticky="nesw"
-        #         )
-
-        #         frame.grid(row=r, column=c, sticky="nesw")
-        #         label = tk.Label(master=frame, text=col)
-        #         label.pack(fill=tk.BOTH)
-        #         c += 1
-        #     r += 1
 
         r = 0
         for row in reader:
@@ -80,6 +53,7 @@ def save_file():
         output_file.write(text)
 
     window.title(f"Sausage Solver - {filepath}")
+
 
 
 window = tk.Tk()
