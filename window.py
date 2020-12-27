@@ -61,11 +61,11 @@ window = tk.Tk()
 window.title("Sausage Solver")
 
 # One row, which grows proportionally
-window.rowconfigure(0, minsize=800, weight=1)
+window.rowconfigure(0, weight=1, minsize=200)
 
 # The main window has two columns, the first of which has a fixed width,
 # and this one, which will grow and shrink proportionally
-window.columnconfigure(1, minsize=800, weight=1)
+window.columnconfigure(1, weight=3, minsize=200)
 
 fr_map = tk.Frame(window)
 # txt_edit = tk.Text(window)
