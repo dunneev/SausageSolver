@@ -2,6 +2,7 @@
 
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
+from tkinter import Canvas
 import csv
 
 
