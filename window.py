@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import tkinter as tk
+from tkinter.constants import *
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from tkinter import Canvas
 import csv
