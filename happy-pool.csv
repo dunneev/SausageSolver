@@ -1,0 +1,6 @@
+water,"ground sausage","ground sausage",ground,ground,ground
+ground,ground,water,water,water,ground
+ground,water,water,burner,water,ground
+ground,water,burner,water,water,ground
+guy,water,water,water,ground,ground
+"ground fork",ground,ground,ground,ground,water
