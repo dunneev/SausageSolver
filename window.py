@@ -36,8 +36,20 @@ def open_file():
                 frame.propagate(0)
                 frame.grid(row=r, column=c, sticky="nsew")
 
-                label = tk.Label(master=frame, text=col)
-                label.pack()
+                canvas = Canvas(master=frame)
+                canvas.create_text(
+                    0,
+                    0,
+                    text=col,
+                    font=12
+                    )
+                
+                canvas.pack()
+            
+                
+                
+                # label = tk.Label(master=frame, text=col)
+                # label.pack()
 
                 c += 1
             r += 1
