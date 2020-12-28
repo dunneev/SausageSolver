@@ -75,6 +75,12 @@ def save_file():
 
 
 
+
+def on_configure(event):
+    print("onConfigure")
+    print(str(fr_map.winfo_children()))
+
+
 window = tk.Tk()
 window.title("Sausage Solver")
 
@@ -98,7 +104,9 @@ btn_save.grid(row=1, column=0, sticky="ew", padx=5)
 
 fr_buttons.grid(row=0, column=0, sticky="ns")
 # txt_edit.grid(row=0, column=1, sticky="nsew")
-fr_map.grid(row=0, column=1, sticky="nesw")
+fr_map.grid(row=0, column=1, sticky="nsew")
+
+fr_map.bind('<Configure>', on_configure)
 
 
 window.mainloop()
