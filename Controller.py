@@ -1,5 +1,6 @@
 from Model import Model
 from View import View
+from Observer import Observer, Observable
 
 
 class Controller:
@@ -7,14 +8,14 @@ class Controller:
 
         self.model = Model()
         self.view = View(window)
-        # self.model.myMoney.addCallback(self.MoneyChanged)
-        # self.view1 = View(root)
-        # self.view2 = ChangerWidget(self.view1)
-        # self.view2.addButton.config(command=self.AddMoney)
-        # self.view2.removeButton.config(command=self.RemoveMoney)
-        # self.MoneyChanged(self.model.myMoney.get())
+
+                
+        self.model.money.add_observer("moneyChanged", Observer("controllerObserver"), self.onMoneyChanged())
+        self.model.changeMoney();
+
         self.view.btn_open.configure(command=self.open_file)
         self.view.btn_save.configure(command=self.save_file)
+        
 
     def open_file(self):
         self.view.open_file()
@@ -23,7 +24,8 @@ class Controller:
     def save_file(self):
         self.view.save_file()
 
-
+    def onMoneyChanged(self):
+        print ("Alert: Money changed")
     # def AddMoney(self):
     #     self.model.addMoney(10)
 
