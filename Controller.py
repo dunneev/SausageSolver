@@ -11,7 +11,7 @@ class Controller:
 
                 
         self.model.money.add_observer("moneyChanged", Observer("controllerObserver"), self.onMoneyChanged())
-        self.model.changeMoney();
+        self.model.changeMoney()
 
         self.view.btn_open.configure(command=self.open_file)
         self.view.btn_save.configure(command=self.save_file)
