@@ -78,7 +78,7 @@ def save_file():
 
 def on_configure(event):
     print("onConfigure")
-    print(str(fr_map.winfo_children()))
+    # print(str(fr_map.winfo_children()))
 
 
 window = tk.Tk()
