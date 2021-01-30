@@ -83,19 +83,19 @@ class View:
 
 
         # One row, which grows proportionally
-        window.rowconfigure(0, weight=1, minsize=200)
+        self.window.rowconfigure(0, weight=1, minsize=200)
 
         # The main window has two columns, the first of which has a fixed width,
         # and this one, which will grow and shrink proportionally
-        window.columnconfigure(1, weight=3, minsize=200)
+        self.window.columnconfigure(1, weight=3, minsize=200)
 
         
         
-        btn_open = tk.Button(self.fr_buttons, text="Open")
-        btn_save = tk.Button(self.fr_buttons, text="Save As...")
+        self.btn_open = tk.Button(self.fr_buttons, text="Open")
+        self.btn_save = tk.Button(self.fr_buttons, text="Save As...")
 
-        btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
-        btn_save.grid(row=1, column=0, sticky="ew", padx=5)
+        self.btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
+        self.btn_save.grid(row=1, column=0, sticky="ew", padx=5)
 
         self.fr_buttons.grid(row=0, column=0, sticky="ns")
         # txt_edit.grid(row=0, column=1, sticky="nsew")
@@ -103,4 +103,3 @@ class View:
 
         self.fr_map.bind('<Configure>', self.on_configure(self))
 
-        window.mainloop()
