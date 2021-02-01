@@ -1,6 +1,9 @@
 from Model import Model
 from View import View
 from Observer import Observer, Observable
+from tkinter.filedialog import askopenfilename, asksaveasfilename
+import csv
+
 
 
 class Controller:
@@ -18,9 +21,29 @@ class Controller:
         
 
     def open_file(self):
-        self.view.open_file()
+        """Open a file for editing & solving."""
+        filepath = askopenfilename(
+            filetypes=[("Sausage Files", "*.csv"), ("All Files", "*.*")]
+        )
+
+        if not filepath:
+            return
+
+        with open(filepath, newline="") as file:
+            reader = csv.reader(file)
+
+            for row in reader:
+                self.model.addGridRow(row)
+
+        self.view.window.title(f"Sausage Solver - {filepath}")
+        self.gridChanged(self.model.grid)
 
     
     def save_file(self):
         self.view.save_file()
+
+
+
+    def gridChanged(self, grid):
+        self.view.setGridView(grid)
 
