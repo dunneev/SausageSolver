@@ -16,12 +16,6 @@ class Model:
             return (row for row in self.rows)
 
         def addRow(self, row):
-            for tile in row:
-                tile = self.Tile(TileType.GROUND, TileType.SAUSAGE)
             self.rows.append(row)
                 
-        class Tile:
-            
-            def __init__(self, *tileTypes):
-                self.type = tileTypes   
 
