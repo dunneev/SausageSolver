@@ -6,4 +6,6 @@ class TileType(Enum):
     WATER = 2
     SAUSAGE = 3
     WALL = 4
-    GRILL = 5
+    BURNER = 5
+    GUY = 6
+    FORK = 7
