@@ -16,6 +16,11 @@ class Controller:
         # self.model.events.add_observer("modelChanged", Observer("controllerObserver"), self.onModelChanged())
         # self.model.changeModel()
 
+        self.view.events.add_observer("tileClicked", Observer("controllerObserver"))
+
+        
+    
+
         self.view.btn_open.configure(command=self.open_file)
         self.view.btn_save.configure(command=self.save_file)
         
@@ -38,7 +43,7 @@ class Controller:
                 self.model.grid.addRow(row)
 
         self.view.window.title(f"Sausage Solver - {filepath}")
-        self.gridChanged(self.model.grid)
+        self.gridChanged()
 
     
     def save_file(self):
@@ -62,6 +67,8 @@ class Controller:
 
 
 
-    def gridChanged(self, grid):
-        self.view.setGridView(grid)
+
+    def gridChanged(self):
+
+        self.view.setGridView(self.model.grid)
 
