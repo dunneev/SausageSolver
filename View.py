@@ -10,14 +10,20 @@ class View:
             self.fr_map.columnconfigure(r, weight=1)
             self.fr_map.rowconfigure(r, weight=1)
             c = 0
-            for col in row:
+            for tile in row:
                 frame = tk.Frame(
                     master=self.fr_map,
                     relief=tk.RAISED,
                     borderwidth=1
                 )
 
-                tk.Canvas(master=frame)
+                canvas = tk.Canvas(master=frame)
+                canvas.text = canvas.create_text(0,
+                                0,
+                                text=tile)
+                
+            
+           
 
                 # Set propagate to false to prevent frames from wrapping content
                 frame.propagate(0)
@@ -35,13 +41,15 @@ class View:
         """ reposition text in frame map frames """
         
         self.fr_map.update_idletasks()
+        frame : tk.Frame
         for frame in self.fr_map.winfo_children():
+            canvas : tk.Canvas
             for canvas in frame.winfo_children():
-                canvas.delete('all')
-                canvas.create_text(frame.winfo_width()/2,
-                               frame.winfo_height()/2, 
-                               text='hey')
+                canvas.coords(canvas.text, frame.winfo_width()/2,
+                                frame.winfo_height()/2)
+                print (canvas.coords(canvas.text))
                 canvas.pack()      
+
 
     # def save_file(self):
     #     """Save the current file as a new file."""
