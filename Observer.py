@@ -10,7 +10,7 @@ class Observable:
         # str -> dict
         self.events = { event : dict()
                           for event in events }
-        print (self.events)
+
     def get_observers(self, event):
         return self.events[event]
     def add_observer(self, event, who, callback=None):
@@ -19,6 +19,8 @@ class Observable:
             self.get_observers(event)[who] = callback
     def remove_observer(self, event, who):
         del self.get_observers(event)[who]
+    def remove_all_observers(self):
+        self.events.clear()
     def dispatch(self, event, message):
         for observer, callback in self.get_observers(event).items():
             callback(message)
