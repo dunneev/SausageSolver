@@ -23,24 +23,41 @@ class Controller:
     def open_file(self):
         """Open a file for editing & solving."""
         filepath = askopenfilename(
-            filetypes=[("Sausage Files", "*.csv"), ("All Files", "*.*")]
+            filetypes=[("Sausage Files", "*.ssg"), ("All Files", "*.*")]
         )
 
         if not filepath:
             return
 
         with open(filepath, newline="") as file:
+            
             reader = csv.reader(file)
 
             for row in reader:
-                self.model.addGridRow(row)
+                self.model.grid.addRow(row)
 
         self.view.window.title(f"Sausage Solver - {filepath}")
         self.gridChanged(self.model.grid)
 
     
     def save_file(self):
-        self.view.save_file()
+        """Save the current file as a new file."""
+
+        filepath = asksaveasfilename(
+
+            defaultextension=".ssg",
+            filetypes=[("Sausage Files", "*.ssg"), ("All Files", "*.*")],
+        )
+        
+
+        with open(filepath, "w") as output_file:
+            # text = self.txt_edit.get("1.0", tk.END)
+            csvWriter = csv.writer(output_file)
+            for row in self.model.grid:
+                csvWriter.writerow(row)
+            
+
+        self.view.window.title(f"Sausage Solver - {filepath}")
 
 
 
