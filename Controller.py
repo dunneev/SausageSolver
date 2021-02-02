@@ -31,9 +31,10 @@ class Controller:
 
         with open(filepath, newline="") as file:
             
-            reader = csv.reader(file)
+            reader = csv.reader(file, )
 
             for row in reader:
+                row = [tile.upper() for tile in row] 
                 self.model.grid.addRow(row)
 
         self.view.window.title(f"Sausage Solver - {filepath}")
