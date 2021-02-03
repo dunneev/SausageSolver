@@ -15,7 +15,7 @@ class Model:
         def __iter__(self):
             return (row for row in self.rows)
 
-        def addRow(self, row):
+        def add_row(self, row):
             self.rows.append(row)
                 
 

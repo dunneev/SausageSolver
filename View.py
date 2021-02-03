@@ -6,7 +6,7 @@ from Observer import Observable
 
 class View:
 
-    def setGridView(self, grid):
+    def set_grid_view(self, grid):
 
         r = 0
         for row in grid:
@@ -25,7 +25,7 @@ class View:
                                 0,
                                 text=tile)
 
-                canvas.bind("<Button-1>", self.tileClicked)
+                canvas.bind("<Button-1>", self.tile_clicked)
 
                 # # Dropdown
                 # variable = StringVar(frame)
@@ -46,10 +46,10 @@ class View:
 
                 c += 1
             r += 1
-        self.updateGridTextPosition()
+        self.update_grid_text_position()
 
 
-    def updateGridTextPosition(self):
+    def update_grid_text_position(self):
         """ reposition text in frame map frames """
         
         self.fr_map.update_idletasks()
@@ -102,41 +102,41 @@ class View:
         # and this one, which will grow and shrink proportionally
         self.window.columnconfigure(1, weight=3, minsize=200)
 
-        self.btn_open = tk.Button(self.fr_buttons, text="Open", command=self.openButtonClicked)
-        self.btn_save = tk.Button(self.fr_buttons, text="Save As...", command=self.saveButtonClicked)
+        self.btn_open = tk.Button(self.fr_buttons, text="Open", command=self.open_button_clicked)
+        self.btn_save = tk.Button(self.fr_buttons, text="Save As...", command=self.save_button_clicked)
         self.btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
         self.btn_save.grid(row=1, column=0, sticky="ew", padx=5)
 
         self.tile_listbox = tk.Listbox(self.fr_tile_editor, selectmode='multiple')
-        self.populateTileListBox()
+        self.populate_tile_listbox()
         self.tile_listbox.pack()
 
         self.fr_buttons.grid(row=0, column=0, sticky="ns")
         # self.fr_tile_editor.grid(row=1, column=0)
         self.fr_map.grid(row=0, column=1, sticky="nsew")
 
-        self.fr_map.bind(sequence='<Configure>', func=self.onConfigure)
+        self.fr_map.bind(sequence='<Configure>', func=self.on_configure)
         
 
-    def populateTileListBox(self):
+    def populate_tile_listbox(self):
         for x in TileType:
             self.tile_listbox.insert("end", x.name)
 
-    def onConfigure(self, event):
+    def on_configure(self, event):
         print("onConfigure")
-        self.updateGridTextPosition()
+        self.update_grid_text_position()
         # print(str(fr_map.winfo_children()))
 
-    def tileClicked(self, event):
+    def tile_clicked(self, event):
         self.events.dispatch("tileClicked", event.widget)
         # tile : tk.Canvas
         # tile = event.widget
         # print(tile.configure())
         # tile.configure(bg='red')
     
-    def openButtonClicked(self):
+    def open_button_clicked(self):
         pass
 
-    def saveButtonClicked(self):
+    def save_button_clicked(self):
         pass
 

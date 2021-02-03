@@ -40,10 +40,10 @@ class Controller:
 
             for row in reader:
                 row = [tile.upper() for tile in row] 
-                self.model.grid.addRow(row)
+                self.model.grid.add_row(row)
 
         self.view.window.title(f"Sausage Solver - {filepath}")
-        self.gridChanged()
+        self.grid_changed()
 
     
     def save_file(self):
@@ -68,7 +68,7 @@ class Controller:
 
 
 
-    def gridChanged(self):
+    def grid_changed(self):
 
-        self.view.setGridView(self.model.grid)
+        self.view.set_grid_view(self.model.grid)
 
