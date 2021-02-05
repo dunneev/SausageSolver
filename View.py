@@ -8,6 +8,9 @@ class View:
 
     def set_grid_view(self, grid):
 
+    SELECTED_TILE_COLOR = 'yellow'
+    DEFAULT_TILE_COLOR = '#d9d9d9'
+    TILE_WIDTH = 30
         r = 0
         for row in grid:
             self.fr_map.columnconfigure(r, weight=1)
