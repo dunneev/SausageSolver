@@ -13,8 +13,7 @@ class View:
     TILE_WIDTH = 30
         r = 0
         for row in grid:
-            self.fr_map.columnconfigure(r, weight=1)
-            self.fr_map.rowconfigure(r, weight=1)
+            self.fr_map.columnconfigure(r, weight=1, minsize=View.TILE_WIDTH)
             c = 0
             for tile in row:
                 frame = tk.Frame(
