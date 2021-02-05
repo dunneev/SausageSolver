@@ -16,11 +16,9 @@ class Observable:
     def add_observer(self, event, who, callback=None):
         if callback == None:
             callback = getattr(who, 'update')
-            self.get_observers(event)[who] = callback
+        self.get_observers(event)[who] = callback
     def remove_observer(self, event, who):
         del self.get_observers(event)[who]
-    def remove_all_observers(self):
-        self.events.clear()
-    def dispatch(self, event, message):
+    def dispatch(self, event, *data, **kwdata):
         for observer, callback in self.get_observers(event).items():
-            callback(message)
+            callback(*data, **kwdata)
