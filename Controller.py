@@ -16,13 +16,15 @@ class Controller:
         # self.model.events.add_observer("modelChanged", Observer("controllerObserver"), self.onModelChanged())
         # self.model.changeModel()
 
-        self.view.events.add_observer("tileClicked", Observer("controllerObserver"))
+        self.addViewObservers()
 
         
     
-
-        self.view.btn_open.configure(command=self.open_file)
-        self.view.btn_save.configure(command=self.save_file)
+    def addViewObservers(self):
+        self.view.add_observer("on_tile_click", Observer("tile_observer"), self.on_tile_click)
+        self.view.add_observer("on_resize", Observer("resize_observer"), self.on_resize)
+        self.view.add_observer("on_open_click", Observer("open_observer"), self.open_file)
+        self.view.add_observer("on_save_click", Observer("save_observer"), self.save_file)
         
 
     def open_file(self):
@@ -67,8 +69,11 @@ class Controller:
 
 
 
+    def on_tile_click(self, *data, **kwdata):
+        print ("tile clicked")
+        self.model.grid.toggle_tile_selected(kwdata.get("row"), kwdata.get("col"))    
+        self.view.update_grid_view(self.model.grid)
 
-    def grid_changed(self):
-
-        self.view.set_grid_view(self.model.grid)
+    def on_resize(self):
+        self.view.update_grid_view(self.model.grid)
 
