@@ -11,6 +11,9 @@ class View(Observable):
     SELECTED_TILE_COLOR = 'yellow'
     DEFAULT_TILE_COLOR = '#d9d9d9'
     TILE_WIDTH = 30
+
+    def create_grid_view(self, grid):
+
         r = 0
         for row in grid:
             self.fr_map.columnconfigure(r, weight=1, minsize=View.TILE_WIDTH)
@@ -20,15 +23,17 @@ class View(Observable):
                 frame = tk.Frame(
                     master=self.fr_map,
                     relief=tk.RAISED,
-                    borderwidth=1
-                )
+                    borderwidth=1)
 
+
+                
                 canvas = tk.Canvas(master=frame)
-                canvas.text = canvas.create_text(0,
-                                0,
-                                text=tile)
+                canvas.text = canvas.create_text(0, 0,text=tile.tile_type)
+                canvas.row = r
+                canvas.col = c
+                canvas.bind("<Button-1>", self.on_tile_click)
+                canvas.pack()
 
-                canvas.bind("<Button-1>", self.tile_clicked)
 
                 # # Dropdown
                 # variable = StringVar(frame)
@@ -49,34 +54,28 @@ class View(Observable):
 
                 c += 1
             r += 1
-        self.update_grid_text_position()
+        self.update_grid_view(grid)
 
+    def update_grid_view(self, grid):
+        tile_index = 0
 
-    def update_grid_text_position(self):
-        """ reposition text in frame map frames """
-        
+        # Update frame size for use in for loop
         self.fr_map.update_idletasks()
+
         frame : tk.Frame
         for frame in self.fr_map.winfo_children():
             canvas : tk.Canvas
             for canvas in frame.winfo_children():
-                canvas.coords(canvas.text, frame.winfo_width()/2,
-                                frame.winfo_height()/2)
-                print (canvas.coords(canvas.text))
-                canvas.pack()      
+
+                # Center canvas
+                canvas.coords(canvas.text, frame.winfo_width()/2, frame.winfo_height()/2)   
+                if grid.tile_at_index(tile_index).is_selected:
+                    canvas.configure(background=View.SELECTED_TILE_COLOR)
+                else:
+                    canvas.configure(background=View.DEFAULT_TILE_COLOR)
 
 
-    # def save_file(self):
-    #     """Save the current file as a new file."""
-
-    #     filepath = asksaveasfilename(
-
-    #         defaultextension="txt",
-    #         filetypes=[("Sausage Files", "*.csv"), ("All Files", "*.*")],
-    #     )
-
-    #     if not filepath:
-    #         return
+                tile_index += 1
 
     #     with open(filepath, "w") as output_file:
     #         text = self.txt_edit.get("1.0", tk.END)
@@ -86,7 +85,7 @@ class View(Observable):
 
     def __init__(self, window):
     
-        super().__init__(['on_tile_click', 'on_resize'])
+        super().__init__(['on_tile_click', 'on_resize', 'on_open_click', 'on_save_click'])
 
 
     def __init__(self, window):
@@ -128,19 +127,7 @@ class View(Observable):
             self.tile_listbox.insert("end", x.name)
 
     def on_configure(self, event):
-        print("onConfigure")
-        self.update_grid_text_position()
-        # print(str(fr_map.winfo_children()))
-
-    def tile_clicked(self, event):
-        self.events.dispatch("tileClicked", event.widget)
-        # tile : tk.Canvas
-        # tile = event.widget
-        # print(tile.configure())
-        # tile.configure(bg='red')
-    
-    def open_button_clicked(self):
-        pass
+        self.dispatch("on_resize")
 
     def save_button_clicked(self):
         pass
