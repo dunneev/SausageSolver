@@ -46,7 +46,7 @@ class Model(Observable):
             def __init__(self, row, col, TileType):
                 self.row = row
                 self.col = col
-                self.TileType = TileType
+                self.tile_type = TileType
                 self.is_selected = False
 
     
