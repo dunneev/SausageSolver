@@ -93,30 +93,33 @@ class View(Observable):
 
         self.window = window
         self.fr_map = tk.Frame(window)
-        self.fr_buttons = tk.Frame(window)
-        self.fr_tile_editor = tk.Frame(window)
+        self.fr_options_panel = tk.Frame(window)
+        self.fr_buttons = tk.Frame(self.fr_options_panel)
+        self.fr_tile_editor = tk.Frame(self.fr_options_panel)
 
 
         # One row, which grows proportionally
-        self.window.rowconfigure(0, weight=1)
-        self.window.rowconfigure(1, weight=1)
+        self.window.rowconfigure(0, weight=1, minsize=200)
 
 
-        # The main window has two columns, the first of which has a fixed width,
+        # The main window has two columns, the first of which has a fixed width:
+        self.window.columnconfigure(0, minsize=200)
+
         # and this one, which will grow and shrink proportionally
         self.window.columnconfigure(1, weight=3, minsize=200)
 
-        self.btn_open = tk.Button(self.fr_buttons, text="Open", command=self.open_button_clicked)
-        self.btn_save = tk.Button(self.fr_buttons, text="Save As...", command=self.save_button_clicked)
-        self.btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
-        self.btn_save.grid(row=1, column=0, sticky="ew", padx=5)
+        self.btn_open = tk.Button(self.fr_buttons, text="Open", command=self.on_open_click)
+        self.btn_save = tk.Button(self.fr_buttons, text="Save As...", command=self.on_save_click)
+        self.btn_open.grid(row=0, column=0, sticky='ew')
+        self.btn_save.grid(row=1, column=0, sticky='ew')
 
-        self.tile_listbox = tk.Listbox(self.fr_tile_editor, selectmode='multiple')
+        self.tile_listbox = tk.Listbox(self.fr_tile_editor, selectmode='multiple', height=len(TileType))
         self.populate_tile_listbox()
         self.tile_listbox.pack()
 
-        self.fr_buttons.grid(row=0, column=0, sticky="ns")
-        # self.fr_tile_editor.grid(row=1, column=0)
+        self.fr_buttons.grid(row=0, column=0)
+        self.fr_tile_editor.grid(row=1, column=0, sticky='ns')
+        self.fr_options_panel.grid(row=0, column=0, sticky='ns')
         self.fr_map.grid(row=0, column=1, sticky="nsew")
 
         self.fr_map.bind(sequence='<Configure>', func=self.on_configure)
