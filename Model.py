@@ -40,7 +40,17 @@ class Model(Observable):
         def toggle_tile_selected(self, row, col):
             self.tile_at_coordinates(row, col).is_selected = not self.tile_at_coordinates(row, col).is_selected
 
-            
+        def set_tile_type(self, row, col, TileType):
+            self.tile_at_coordinates(row, col).tile_type = TileType
+
+        def set_selected_tile_types(self, tileTypes):
+            tile : self.Tile
+            for row in self.rows:
+                for tile in row:
+                    if tile.is_selected:
+                        tile.tile_type = tileTypes
+
+                
 
         class Tile:
             def __init__(self, row, col, TileType):

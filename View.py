@@ -6,12 +6,13 @@ from Observer import Observable
 
 class View(Observable):
 
-
     SELECTED_TILE_COLOR = 'yellow'
     DEFAULT_TILE_COLOR = '#d9d9d9'
     TILE_WIDTH = 30
 
     def create_grid_view(self, grid):
+
+        self.tile_listbox.configure(state='normal')
 
         r = 0
         for row in grid:
@@ -24,20 +25,16 @@ class View(Observable):
                     relief=tk.RAISED,
                     borderwidth=1)
 
-
-                
                 canvas = tk.Canvas(master=frame)
-                canvas.text = canvas.create_text(0, 0,text=tile.tile_type)
+                canvas.text = canvas.create_text(0, 0, text=tile.tile_type)
                 canvas.row = r
                 canvas.col = c
                 canvas.bind("<Button-1>", self.on_tile_click)
                 canvas.pack()
 
-
                 # # Dropdown
                 # variable = StringVar(frame)
                 # variable.set(tile)  # default value
-
 
                 # tileOptions = [tile.name for tile in TileType]
                 # print (tileOptions)
@@ -61,26 +58,34 @@ class View(Observable):
         # Update frame size for use in for loop
         self.fr_map.update_idletasks()
 
-        frame : tk.Frame
+        frame: tk.Frame
         for frame in self.fr_map.winfo_children():
-            canvas : tk.Canvas
+            canvas: tk.Canvas
             for canvas in frame.winfo_children():
+                currentTile : grid.Tile = grid.tile_at_index(tile_index)
 
                 # Center canvas
-                canvas.coords(canvas.text, frame.winfo_width()/2, frame.winfo_height()/2)   
-                if grid.tile_at_index(tile_index).is_selected:
+                canvas.coords(canvas.text, frame.winfo_width() /
+                              2, frame.winfo_height()/2)
+
+                # Update canvas text
+                canvas.itemconfigure(canvas.text, text=currentTile.tile_type)
+
+                
+                if currentTile.is_selected:
                     canvas.configure(background=View.SELECTED_TILE_COLOR)
                 else:
                     canvas.configure(background=View.DEFAULT_TILE_COLOR)
 
-
                 tile_index += 1
 
-
-
     def __init__(self, window):
-    
-        super().__init__(['on_tile_click', 'on_resize', 'on_open_click', 'on_save_click'])
+
+        super().__init__(['on_open_click',
+                          'on_save_click',
+                          'on_tile_click',
+                          'on_resize',
+                          'on_listbox_selection'])
 
         self.window = window
         self.fr_map = tk.Frame(window)
@@ -88,10 +93,8 @@ class View(Observable):
         self.fr_buttons = tk.Frame(self.fr_options_panel)
         self.fr_tile_editor = tk.Frame(self.fr_options_panel)
 
-
-        # One row, which grows proportionally
+        # One "row", which grows proportionally
         self.window.rowconfigure(0, weight=1, minsize=200)
-
 
         # The main window has two columns, the first of which has a fixed width:
         self.window.columnconfigure(0, minsize=200)
@@ -99,22 +102,26 @@ class View(Observable):
         # and this one, which will grow and shrink proportionally
         self.window.columnconfigure(1, weight=3, minsize=200)
 
+        # Place open/save buttons
         self.btn_open = tk.Button(self.fr_buttons, text="Open", command=self.on_open_click)
         self.btn_save = tk.Button(self.fr_buttons, text="Save As...", command=self.on_save_click)
         self.btn_open.grid(row=0, column=0, sticky='ew')
         self.btn_save.grid(row=1, column=0, sticky='ew')
 
+        # Listbox setup
         self.tile_listbox = tk.Listbox(self.fr_tile_editor, selectmode='multiple', height=len(TileType))
         self.populate_tile_listbox()
+        self.tile_listbox.configure(state='disabled')
         self.tile_listbox.pack()
+        self.tile_listbox.bind('<<ListboxSelect>>', func=self.on_listbox_selection)
 
         self.fr_buttons.grid(row=0, column=0)
         self.fr_tile_editor.grid(row=1, column=0, sticky='ns')
         self.fr_options_panel.grid(row=0, column=0, sticky='ns')
         self.fr_map.grid(row=0, column=1, sticky="nsew")
 
+        # Resize binding
         self.fr_map.bind(sequence='<Configure>', func=self.on_configure)
-        
 
     def populate_tile_listbox(self):
         for x in TileType:
@@ -124,10 +131,18 @@ class View(Observable):
         self.dispatch("on_resize")
 
     def on_tile_click(self, event):
-        self.dispatch("on_tile_click", 
-                        widget=event.widget, 
-                        row=event.widget.row, 
-                        col=event.widget.col)
+        self.dispatch("on_tile_click",
+                      widget=event.widget,
+                      row=event.widget.row,
+                      col=event.widget.col)
+
+    def on_listbox_selection(self, event):
+        selectedItems = []
+        lb = event.widget
+        for index in lb.curselection():
+            selectedItems.append(lb.get(index))
+
+        self.dispatch("on_listbox_selection", selectedItems)
 
     def on_open_click(self):
         self.dispatch("on_open_click")

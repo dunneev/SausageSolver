@@ -20,10 +20,12 @@ class Controller:
 
         
     def addViewObservers(self):
-        self.view.add_observer("on_tile_click", Observer("tile_observer"), self.on_tile_click)
-        self.view.add_observer("on_resize", Observer("resize_observer"), self.on_resize)
         self.view.add_observer("on_open_click", Observer("open_observer"), self.open_file)
         self.view.add_observer("on_save_click", Observer("save_observer"), self.save_file)
+        self.view.add_observer("on_tile_click", Observer("tile_observer"), self.on_tile_click)
+        self.view.add_observer("on_resize", Observer("resize_observer"), self.on_resize)
+        self.view.add_observer("on_listbox_selection", Observer("listbox_observer"), self.on_listbox_selection)
+        
 
 
     def open_file(self):
@@ -66,7 +68,6 @@ class Controller:
 
         self.view.window.title(f"Sausage Solver - {filepath}")
 
-    
 
     def on_tile_click(self, *data, **kwdata):
         print ("tile clicked")
@@ -74,5 +75,10 @@ class Controller:
         self.view.update_grid_view(self.model.grid)
 
     def on_resize(self):
+        self.view.update_grid_view(self.model.grid)
+
+    def on_listbox_selection(self, tileTypes):
+        """ set all selected tile types to those selected in the listbox """
+        self.model.grid.set_selected_tile_types(tileTypes)
         self.view.update_grid_view(self.model.grid)
 
