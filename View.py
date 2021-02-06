@@ -4,7 +4,7 @@ from TileType import TileType
 from Observer import Observable
 
 
-class View:
+class View(Observable):
 
     def set_grid_view(self, grid):
 
@@ -83,7 +83,9 @@ class View:
 
     #     self.window.title(f"Sausage Solver - {filepath}")
 
+    def __init__(self, window):
     
+        super().__init__(['on_tile_click', 'on_resize'])
 
 
     def __init__(self, window):
