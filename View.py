@@ -132,6 +132,14 @@ class View(Observable):
     def on_configure(self, event):
         self.dispatch("on_resize")
 
-    def save_button_clicked(self):
-        pass
+    def on_tile_click(self, event):
+        self.dispatch("on_tile_click", 
+                        widget=event.widget, 
+                        row=event.widget.row, 
+                        col=event.widget.col)
 
+    def on_open_click(self):
+        self.dispatch("on_open_click")
+
+    def on_save_click(self):
+        self.dispatch("on_save_click")
