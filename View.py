@@ -6,7 +6,6 @@ from Observer import Observable
 
 class View(Observable):
 
-    def set_grid_view(self, grid):
 
     SELECTED_TILE_COLOR = 'yellow'
     DEFAULT_TILE_COLOR = '#d9d9d9'
@@ -77,19 +76,11 @@ class View(Observable):
 
                 tile_index += 1
 
-    #     with open(filepath, "w") as output_file:
-    #         text = self.txt_edit.get("1.0", tk.END)
-    #         output_file.write(text)
 
-    #     self.window.title(f"Sausage Solver - {filepath}")
 
     def __init__(self, window):
     
         super().__init__(['on_tile_click', 'on_resize', 'on_open_click', 'on_save_click'])
-
-
-    def __init__(self, window):
-        self.events = Observable(["tileClicked"])
 
         self.window = window
         self.fr_map = tk.Frame(window)
