@@ -14,18 +14,17 @@ class Controller:
 
                 
         # self.model.events.add_observer("modelChanged", Observer("controllerObserver"), self.onModelChanged())
-        # self.model.changeModel()
-
+        # self.model.changeModel() 
+            
         self.addViewObservers()
 
         
-    
     def addViewObservers(self):
         self.view.add_observer("on_tile_click", Observer("tile_observer"), self.on_tile_click)
         self.view.add_observer("on_resize", Observer("resize_observer"), self.on_resize)
         self.view.add_observer("on_open_click", Observer("open_observer"), self.open_file)
         self.view.add_observer("on_save_click", Observer("save_observer"), self.save_file)
-        
+
 
     def open_file(self):
         """Open a file for editing & solving."""
@@ -45,7 +44,7 @@ class Controller:
                 self.model.grid.add_row(row)
 
         self.view.window.title(f"Sausage Solver - {filepath}")
-        self.grid_changed()
+        self.view.create_grid_view(self.model.grid)
 
     
     def save_file(self):
@@ -67,7 +66,7 @@ class Controller:
 
         self.view.window.title(f"Sausage Solver - {filepath}")
 
-
+    
 
     def on_tile_click(self, *data, **kwdata):
         print ("tile clicked")
